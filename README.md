@@ -11,7 +11,8 @@ yarn dev
 # or
 pnpm dev
 # or
-bun dev
+pnpm add next-themes clsx tailwind-merge @heroicons/react gsap
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
