@@ -1,6 +1,6 @@
-import TextSphere from '@/components/ui/global'
+import TextSphere from '@/components/ui/utils/global'
 import Image from 'next/image'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/buttons/Button'
 
 export default function Inicio() {
   return (
@@ -24,25 +24,10 @@ export default function Inicio() {
       <div className='relative z-10 flex min-h-[90vh] flex-col items-center justify-center px-4 text-center'>
         <header>
           <h1 className='text-muted font-bold'>Bienvenid@s</h1>
-          <Image
-            src='/logo.webp'
-            alt='Transporte Libertador | Logística Total'
-            width={960}
-            height={160}
-            priority
-            className='mx-auto mb-6 h-auto w-auto'
-          />
         </header>
 
         <div className='mt-12'>
-          <Button
-            href='/contacto'
-            variant='secondary'
-            backgroundColor='var(--muted)'
-            textSize='20px'
-            size='lg'>
-            Contactarnos
-          </Button>
+          
         </div>
       </div>
     </section>

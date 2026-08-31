@@ -5,7 +5,7 @@ export default function StructuredData() {
   const data = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Transporte Libertador',
+    name: 'Kapelu',
     url: AppConfig.url,
     logo: `${AppConfig.url}/logo.png`,
     email: contact.email,
@@ -13,7 +13,7 @@ export default function StructuredData() {
     sameAs: [contact.facebook, contact.instagram, contact.linkedin],
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'San Luis',
+      addressLocality: 'Mendoza',
       addressCountry: 'AR',
     },
   }

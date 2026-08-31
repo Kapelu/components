@@ -4,14 +4,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '../ui/Logo'
-import { ThemeToggle } from '../ui/ThemeToggle'
+import { ThemeToggle } from '../ui/utils/ThemeToggle'
 import { Container } from './Container'
 
 const links = [
   { label: 'Inicio', href: '/' },
-  { label: 'Empresa', href: '/empresa' },
-  { label: 'Servicios', href: '/servicios' },
-  { label: 'Ubicaciones', href: '/ubicaciones' },
+  { label: 'Componentes', href: '/components' },
   { label: 'Contacto', href: '/contacto' },
 ]
 

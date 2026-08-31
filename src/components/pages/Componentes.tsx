@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Blockfooter } from '@/components/ui/Blockfooter'
 
-export default function AboutSection() {
+export default function Componentes() {
   return (
     <section className='mt-20 grid gap-16 lg:grid-cols-3'>
       <article>

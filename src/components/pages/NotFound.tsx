@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import TextSphere from '@/components/ui/global'
+import TextSphere from '@/components/ui/utils/global'
 import Image from 'next/image'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui/buttons/Button'
 
 export default function NotFound() {
   const router = useRouter()
