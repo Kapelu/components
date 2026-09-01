@@ -1,0 +1,34 @@
+{
+  "id": "/",
+  "name": "Transporte Libertador",
+  "short_name": "Daniel",
+  "description": "Sitio web del transporte Libertador | Logistica total",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#fdf6e3",
+  "theme_color": "#268bd2",
+  "lang": "es",
+  "categories": ["transporte, servicio, logistica"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/maskable-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
