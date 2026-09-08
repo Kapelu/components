@@ -1,6 +1,6 @@
 import TextSphere from '@/components/ui/TextSphere'
 import Image from 'next/image'
-import { Button } from '@/components/ui/Button'
+import Button from '@/components/ui/Button'
 
 export default function Inicio() {
   return (
