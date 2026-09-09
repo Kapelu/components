@@ -6,8 +6,8 @@ export const componentsCatalog: ComponentCatalogItem[] = [
   {
     id: 'button',
     label: 'Button',
-    description: `Componente reutilizable de botón para aplicaciones **Next.js + React + TypeScript + Tailwind CSS**.
-    El componente permite representar tanto un \`<Button>\` HTML como un enlace de Next.js mediante una única API. \`<Button>\` es un componente reutilizable que centraliza la apariencia y el comportamiento de botones y enlaces.`,
+    description: `Componente reutilizable de botón para aplicaciones **Next.js + React + TypeScript + Tailwind**.
+    El componente permite representar tanto un \`<Button>\` HTML como un enlace de \`Next.js\` mediante una única API.`,
     docPath: 'src/doc/DocButton.tsx.md',
     render: (
       <div className='flex gap-4'>

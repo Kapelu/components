@@ -1,17 +1,15 @@
 'use client'
-
 import { useState } from 'react'
-
-import Button from '@/components/ui/Button'
 import { useModal } from '@/components/layout/ModalProvider'
+import Button from '@/components/ui/Button'
 
-interface ComponenteDocButtonProps {
+interface ComponenteDocModal {
   docPath: string
 }
 
-export default function ComponenteDocButton({
+export default function ComponenteDocModal({
   docPath,
-}: ComponenteDocButtonProps) {
+}: ComponenteDocModal) {
   const { showModal } = useModal()
   const [loading, setLoading] = useState(false)
 
@@ -36,6 +34,7 @@ export default function ComponenteDocButton({
         title: 'Documentación del componente',
         markdown: documentation,
         buttonText: 'Cerrar',
+        className: 'bg-heading',
       })
     } catch {
       showModal({

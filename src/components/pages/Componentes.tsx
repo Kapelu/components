@@ -1,5 +1,4 @@
 import { readFileSync } from 'node:fs'
-
 import { resolve } from 'node:path'
 
 import Title from '@/components/ui/Title'
@@ -11,7 +10,16 @@ import Button from '../ui/Button'
 export default function Componentes() {
   const catalog = componentsCatalog.map((item) => ({
     ...item,
-    code: readFileSync(resolve(process.cwd(), item.sourcePath), 'utf8'),
+    code: readFileSync(
+      resolve(
+        process.cwd(),
+        'src',
+        'components',
+        'ui',
+        item.sourcePath.split('/').pop()!,
+      ),
+      'utf8',
+    ),
   }))
 
   return (
@@ -27,6 +35,7 @@ export default function Componentes() {
           {catalog.map((item) => (
             <ComponenteArticle key={item.id} item={item} />
           ))}
+
           <Button variant='primary'>Enviar</Button>
         </main>
       </div>

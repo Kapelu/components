@@ -1,13 +1,3 @@
-# Button.tsx
-
-Componente reutilizable de botón para aplicaciones **Next.js + React + TypeScript + Tailwind CSS**.
-
-El componente permite representar tanto un `<button>` HTML como un enlace de Next.js mediante una única API.
-
----
-
-## 1. ¿Qué hace?
-
 `Button` es un componente reutilizable que centraliza la apariencia y el comportamiento de botones y enlaces.
 
 Puede utilizarse para:
@@ -25,17 +15,13 @@ Puede utilizarse para:
 
 La característica principal es que el componente determina automáticamente qué elemento HTML renderizar.
 
-### Sin `href`
-
-Renderiza:
+#### Sin `href` Renderiza:
 
 ```tsx
 <button>
 ```
 
-### Con `href`
-
-Renderiza:
+#### Con `href` Renderiza:
 
 ```tsx
 <Link>
@@ -45,7 +31,7 @@ Por lo tanto, no es necesario crear un componente separado para botones y enlace
 
 ---
 
-# 2. Variantes disponibles
+# Variantes disponibles
 
 El componente dispone de cuatro variantes:
 
@@ -64,7 +50,7 @@ Las variantes son:
 
 ---
 
-# 3. Variante `primary`
+## Variante `primary`
 
 Es la variante predeterminada.
 
@@ -94,7 +80,7 @@ hover:bg-muted
 hover:text-link
 ```
 
-## Usos recomendados
+### Usos recomendados
 
 Ideal para acciones principales como:
 
@@ -116,7 +102,7 @@ Ejemplo:
 
 ---
 
-# 4. Variante `secondary`
+## Variante `secondary`
 
 Está pensada para acciones secundarias.
 
@@ -136,7 +122,7 @@ hover:border-secondary
 hover:brightness-105
 ```
 
-## Usos recomendados
+### Usos recomendados
 
 Por ejemplo:
 
@@ -163,7 +149,7 @@ Ejemplo:
 
 ---
 
-# 5. Variante `ghost`
+## Variante `ghost`
 
 Es una variante más discreta.
 
@@ -184,7 +170,7 @@ hover:bg-muted
 hover:text-link
 ```
 
-## Usos recomendados
+### Usos recomendados
 
 Es apropiada para acciones que no deberían tener tanto peso visual:
 
@@ -205,7 +191,7 @@ Ejemplo:
 
 ---
 
-# 6. Variante `menu`
+## Variante `menu`
 
 Está diseñada específicamente para elementos de navegación o menús.
 
@@ -229,7 +215,7 @@ transition
 hover:bg-muted
 ```
 
-## Usos recomendados
+### Usos recomendados
 
 Por ejemplo:
 
@@ -264,7 +250,7 @@ En este caso se renderiza como un `Link`.
 
 ---
 
-# 7. Tamaños
+# Tamaños
 
 El componente tiene tres tamaños:
 
@@ -280,7 +266,7 @@ type ButtonSize = 'sm' | 'md' | 'lg'
 
 ---
 
-## 7.1 `sm`
+## `sm`
 
 ```tsx
 <Button size="sm">
@@ -305,7 +291,7 @@ Ideal para:
 
 ---
 
-## 7.2 `md`
+## `md`
 
 Es el tamaño predeterminado.
 
@@ -319,7 +305,7 @@ Ideal para la mayoría de las acciones de la aplicación.
 
 ---
 
-## 7.3 `lg`
+## `lg`
 
 ```tsx
 <Button size="lg">
@@ -344,7 +330,7 @@ Ideal para:
 
 ---
 
-# 8. Estado `loading`
+# Estado `loading`
 
 El componente soporta un estado de carga mediante:
 
@@ -362,7 +348,7 @@ Ejemplo:
 
 Cuando `loading` es `true`:
 
-1. El botón queda deshabilitado.
+El botón queda deshabilitado.
 2. Se agrega `cursor-wait`.
 3. Se agrega `opacity-70`.
 4. El contenido se reemplaza por:
@@ -395,7 +381,7 @@ y evita que el usuario vuelva a ejecutar la acción mientras está cargando.
 
 ---
 
-# 9. Botón deshabilitado
+# Botón deshabilitado
 
 Puede utilizarse la prop estándar de HTML:
 
@@ -419,16 +405,9 @@ Esto hace que el botón:
 
 ---
 
-# 10. Uso con eventos
+# Uso con eventos
 
-Como `ButtonProps` extiende:
-
-```ts
-React.ButtonHTMLAttributes<HTMLButtonElement>
-```
-
-permite utilizar las propiedades estándar de un botón HTML.
-
+Como `ButtonProps` extiende: `React.ButtonHTMLAttributes<HTMLButtonElement>` permite utilizar las propiedades estándar de un botón HTML.
 Por ejemplo:
 
 ```tsx
@@ -440,16 +419,14 @@ Por ejemplo:
 También:
 
 ```tsx
-<Button
-  onClick={handleSave}
->
+<Button onClick={handleSave}>
   Guardar
 </Button>
 ```
 
 ---
 
-# 11. Uso con formularios
+## Uso con formularios
 
 Puede utilizarse como botón de envío:
 
@@ -473,16 +450,9 @@ Esto es importante porque el tipo predeterminado de un `<button>` HTML dentro de
 
 ---
 
-# 12. Uso como enlace interno
+## Uso como enlace interno
 
-Si se proporciona:
-
-```tsx
-href
-```
-
-el componente utiliza `next/link`.
-
+Si se proporciona: `href` el componente utiliza `next/link`.
 Ejemplo:
 
 ```tsx
@@ -503,11 +473,9 @@ Esto permite utilizar el componente para navegación interna sin crear otro comp
 
 ---
 
-# 13. Enlaces con variantes
+## Enlaces con variantes
 
-Las variantes funcionan también con `href`.
-
-Por ejemplo:
+Las variantes funcionan también con `href`.Por ejemplo:
 
 ```tsx
 <Button
@@ -542,7 +510,7 @@ También:
 
 ---
 
-# 14. Enlaces externos
+## Enlaces externos
 
 El componente acepta:
 
@@ -567,7 +535,7 @@ Esto permite utilizar el componente también para enlaces externos.
 
 ---
 
-# 15. Descargas
+## Descargas
 
 También soporta:
 
@@ -588,7 +556,7 @@ Ejemplo:
 
 ---
 
-# 16. Clases personalizadas
+## Clases personalizadas
 
 El componente permite agregar clases mediante:
 
@@ -616,7 +584,7 @@ Las clases proporcionadas por el usuario se combinan con las clases internas med
 
 ---
 
-# 17. Color de fondo personalizado
+## Color de fondo personalizado
 
 Existe una prop específica:
 
@@ -650,7 +618,7 @@ También puede utilizar valores CSS:
 
 ---
 
-# 18. Tamaño de texto personalizado
+## Tamaño de texto personalizado
 
 También existe:
 
@@ -684,7 +652,7 @@ También acepta valores CSS como:
 
 ---
 
-# 19. Combinación de propiedades
+## Combinación de propiedades
 
 Las diferentes propiedades pueden combinarse.
 
@@ -714,7 +682,7 @@ Otro ejemplo:
 
 ---
 
-# 20. Uso con iconos
+## Uso con iconos
 
 El componente acepta cualquier `React.ReactNode` como `children`.
 
@@ -757,16 +725,9 @@ permite alinear correctamente los elementos internos.
 
 ---
 
-# 21. Uso con contenido complejo
+## Uso con contenido complejo
 
-Como `children` es:
-
-```ts
-React.ReactNode
-```
-
-puede contener diferentes elementos React.
-
+Como `children` es: `React.ReactNode` puede contener diferentes elementos React.
 Ejemplo:
 
 ```tsx
@@ -795,7 +756,7 @@ Esto elimina el margen del párrafo y normaliza su altura de línea.
 
 ---
 
-# 22. Ejemplo completo
+## Ejemplo completo
 
 Una página podría utilizar las diferentes variantes de esta manera:
 
@@ -821,7 +782,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-# 23. Ejemplo de formulario
+## Ejemplo de formulario
 
 ```tsx
 <form onSubmit={handleSubmit}>
@@ -847,7 +808,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-# 24. Ejemplo de navegación
+## Ejemplo de navegación
 
 ```tsx
 <nav>
@@ -876,7 +837,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-# 25. API del componente
+## API del componente
 
 ## Props propias
 
@@ -895,7 +856,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-# 26. Props heredadas de HTML
+## Props heredadas de HTML
 
 Al extender:
 
@@ -933,7 +894,7 @@ Por ejemplo:
 
 ---
 
-# 27. Comportamiento según `href`
+## Comportamiento según `href`
 
 La lógica principal es:
 
@@ -981,7 +942,7 @@ Resultado conceptual:
 
 ---
 
-# 28. Arquitectura visual
+## Arquitectura visual
 
 El componente construye sus clases mediante:
 
@@ -1035,7 +996,7 @@ w-full
 
 ---
 
-# 29. Resumen
+## Resumen
 
 `Button.tsx` es un componente de propósito general que permite centralizar botones y enlaces dentro de la aplicación.
 

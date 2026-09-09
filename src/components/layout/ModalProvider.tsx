@@ -30,6 +30,7 @@ export interface ModalOptions {
   redirectSeconds?: number
   buttonText?: string
   title?: string
+  className?: string
   onClose?: () => void
 }
 
@@ -60,6 +61,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     redirectSeconds: 5,
     buttonText: 'Aceptar',
     title: undefined as string | undefined,
+    className: undefined as string | undefined,
   })
 
   const [onCloseCallback, setOnCloseCallback] = useState<
@@ -77,6 +79,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       redirectSeconds: modal.redirectSeconds ?? 5,
       buttonText: modal.buttonText ?? 'Aceptar',
       title: modal.title,
+      className: modal.className,
     })
 
     setOnCloseCallback(() => modal.onClose)
@@ -117,7 +120,8 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         codeLanguage={options.codeLanguage}
         redirectTo={options.redirectTo}
         redirectSeconds={options.redirectSeconds}
-        buttonText={options.buttonText}
+        className={options.className}
+        /* buttonText={options.buttonText} */
       />
     </ModalContext.Provider>
   )

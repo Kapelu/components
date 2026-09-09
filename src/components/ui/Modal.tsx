@@ -2,7 +2,9 @@
 
 import type { ComponentType } from 'react'
 
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useEffect, useState } from 'react'
+
 import { createHighlighter } from 'shiki'
 
 import StyleMarkdown from '@/components/pages/componentes/StyleMarkdown'
@@ -20,7 +22,7 @@ type Props = {
   codeLanguage?: string
   redirectTo?: string | null
   redirectSeconds?: number
-  buttonText?: string
+  className?: string
 }
 
 export default function Modal({
@@ -36,7 +38,7 @@ export default function Modal({
   codeLanguage = 'tsx',
   redirectTo = null,
   redirectSeconds = 5,
-  buttonText = 'Aceptar',
+  className = '',
 }: Props) {
   const [visible, setVisible] = useState(false)
   const [seconds, setSeconds] = useState(redirectSeconds)
@@ -118,7 +120,6 @@ export default function Modal({
     }
 
     const sourceCode = code
-
     let cancelled = false
 
     async function highlightCode() {
@@ -171,7 +172,7 @@ export default function Modal({
       aria-modal='true'>
       <div
         onClick={handleClose}
-        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-transparent backdrop-blur-sm transition-opacity duration-300 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -186,10 +187,8 @@ export default function Modal({
           type='button'
           onClick={handleClose}
           aria-label='Cerrar'
-          className='absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full text-foreground transition hover:bg-muted hover:text-title'>
-          <span aria-hidden='true' className='text-lg leading-none'>
-            ×
-          </span>
+          className='absolute right-4 top-4 z-20 flex h-8 w-8 items-center justify-center rounded-full text-foreground transition hover:bg-muted hover:text-title'>
+          <XMarkIcon aria-hidden='true' className='h-5 w-5' />
         </button>
 
         {isCodeModal ? (
@@ -208,7 +207,8 @@ export default function Modal({
               </div>
             </div>
 
-            <div className='overflow-hidden rounded-xl border border-[#586e75] bg-[#002b36]'>
+            <div
+              className={`overflow-hidden rounded-xl border border-[#586e75] bg-[#002b36] ${className}`}>
               <pre
                 className='max-h-[70vh] overflow-auto p-5 text-left text-sm leading-relaxed'
                 tabIndex={0}
@@ -219,13 +219,6 @@ export default function Modal({
                 }}
               />
             </div>
-
-            <button
-              type='button'
-              onClick={handleClose}
-              className='mt-5 flex h-11 w-full items-center justify-center rounded-lg border border-secondary bg-background px-4 font-medium text-title transition-colors hover:bg-muted'>
-              {buttonText}
-            </button>
           </div>
         ) : isMarkdownModal ? (
           <div className='pt-2'>
@@ -237,16 +230,10 @@ export default function Modal({
               </h2>
             </div>
 
-            <div className='max-h-[70vh] overflow-auto rounded-xl border border-border bg-surface p-5 text-sm'>
+            <div
+              className={`max-h-[70vh] overflow-auto rounded-xl border border-border bg-surface p-5 text-sm ${className}`}>
               <StyleMarkdown>{markdown ?? ''}</StyleMarkdown>
             </div>
-
-            <button
-              type='button'
-              onClick={handleClose}
-              className='mt-5 flex h-11 w-full items-center justify-center rounded-lg border border-secondary bg-background px-4 font-medium text-title transition-colors hover:bg-muted'>
-              {buttonText}
-            </button>
           </div>
         ) : (
           <>
@@ -299,15 +286,6 @@ export default function Modal({
                 Redirigiendo en {seconds}{' '}
                 {seconds === 1 ? 'segundo' : 'segundos'}...
               </p>
-            )}
-
-            {!title && !message && messages.length > 0 && (
-              <button
-                type='button'
-                onClick={handleClose}
-                className='mt-6 flex h-11 w-full items-center justify-center rounded-lg border border-secondary bg-background px-4 font-medium text-title transition-colors hover:bg-muted'>
-                {buttonText}
-              </button>
             )}
           </>
         )}
