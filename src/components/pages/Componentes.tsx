@@ -35,8 +35,6 @@ export default function Componentes() {
           {catalog.map((item) => (
             <ComponenteArticle key={item.id} item={item} />
           ))}
-
-          <Button variant='primary'>Enviar</Button>
         </main>
       </div>
     </>

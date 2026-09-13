@@ -1,8 +1,5 @@
-# Input.tsx
 
-Componente reutilizable de entrada de datos para aplicaciones **Next.js + React + TypeScript + Tailwind CSS**.
-
-El componente permite manejar diferentes tipos de entradas mediante una única API, incluyendo:
+Este componente permite manejar diferentes tipos de entradas mediante una única API, incluyendo:
 
 - Inputs normales.
 - Inputs con `label`.
@@ -21,91 +18,17 @@ El componente utiliza `'use client'` porque administra estado interno mediante `
 
 ---
 
-# 1. ¿Qué hace?
+## ¿Qué hace?
 
-`Input` es un componente reutilizable para construir campos de formularios.
+`Input` es un componente reutilizable para construir campos de formularios. Su principal característica es que puede funcionar como: `<input>` ó `<textarea>` dependiendo de la propiedad `multiline`. Por defecto, es `multiline = false`
 
-Su principal característica es que puede funcionar como:
-
-```tsx
-<input>
-```
-
-o como:
-
-```tsx
-<textarea>
-```
-
-dependiendo de la propiedad:
-
-```tsx
-multiline
-```
-
-Por defecto:
-
-```tsx
-multiline = false
-```
-
-Por lo tanto:
-
-```tsx
-<Input />
-```
-
-crea un `<input>`.
-
-Mientras que:
-
-```tsx
-<Input multiline />
-```
-
-crea un `<textarea>`.
+> Por lo tanto `<Input />` crea un `<input>`. Mientras que `<Input multiline />` crea un `<textarea>`.
 
 ---
 
-# 2. Característica principal: Input o Textarea
+### Label normal
 
-## Input normal
-
-```tsx
-<Input />
-```
-
-Renderiza:
-
-```html
-<input>
-```
-
-## Textarea
-
-```tsx
-<Input multiline />
-```
-
-Renderiza:
-
-```html
-<textarea>
-```
-
-Esto permite utilizar un único componente para diferentes necesidades de formularios.
-
----
-
-# 3. Label normal
-
-La propiedad:
-
-```ts
-label?: string
-```
-
-permite mostrar un label encima del campo.
+La propiedad `label?: string` permite mostrar un label encima del campo.
 
 Ejemplo:
 
@@ -122,50 +45,32 @@ Nombre
 └──────────────────────┘
 ```
 
-El label solamente aparece de esta manera cuando:
-
-```tsx
-floating={false}
-```
-
-que es el valor predeterminado.
+El label solamente aparece de esta manera cuando `floating={false}` que es el valor predeterminado.
 
 ---
 
-# 4. Label flotante
+### Label flotante
 
-El componente permite utilizar labels flotantes mediante:
-
-```tsx
-floating
-```
+El componente permite utilizar labels flotantes mediante `floating`.
 
 Ejemplo:
 
-```tsx
-<Input
-  label="Nombre"
-  floating
-/>
-```
+`<Input label="Nombre" floating/>`
 
-El label inicialmente aparece dentro del campo.
-
-Cuando el usuario enfoca el campo o introduce contenido, el label se desplaza hacia la parte superior.
+El label inicialmente aparece dentro del campo. Cuando el usuario enfoca el campo o introduce contenido, el label se desplaza hacia la parte superior.
 
 Conceptualmente:
 
 ```text
 ┌──────────────────────┐
 │ Nombre               │
-│                      │
 └──────────────────────┘
 ```
 
 Al enfocar o escribir:
 
 ```text
-┌─Nombre───────────────┐
+┌ Nombre ──────────────┐
 │ Juan                 │
 └──────────────────────┘
 ```
