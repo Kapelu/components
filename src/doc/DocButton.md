@@ -30,6 +30,19 @@ La característica principal es que el componente determina automáticamente qu�
 Por lo tanto, no es necesario crear un componente separado para botones y enlaces.
 
 ---
+# Forma de uso
+
+```tsx
+import Button from "@/components/ui/Button"
+
+export default function Page() {
+  return (
+    <Button variant="primary"> Click Me!</Button>
+  )
+}
+```
+
+---
 
 # Variantes disponibles
 

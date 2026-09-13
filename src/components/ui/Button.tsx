@@ -16,7 +16,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   download?: string
   backgroundColor?: string
   textSize?: string
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const base =
