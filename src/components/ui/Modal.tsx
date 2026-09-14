@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 
 import { createHighlighter } from 'shiki'
 
+import MdxRenderer from '@/components/pages/componentes/MdxRenderer'
 import StyleMarkdown from '@/components/pages/componentes/StyleMarkdown'
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   messages?: string[]
   code?: string | null
   markdown?: string | null
+  mdx?: string | null
   codeLanguage?: string
   redirectTo?: string | null
   redirectSeconds?: number
@@ -35,6 +37,7 @@ export default function Modal({
   messages = [],
   code = null,
   markdown = null,
+  mdx = null,
   codeLanguage = 'tsx',
   redirectTo = null,
   redirectSeconds = 5,
@@ -45,8 +48,9 @@ export default function Modal({
   const [highlightedCode, setHighlightedCode] = useState('')
 
   const isCodeModal = Boolean(code)
-  const isMarkdownModal = Boolean(markdown)
-  const isDocumentModal = isCodeModal || isMarkdownModal
+  const isMdxModal = Boolean(mdx)
+  const isMarkdownModal = Boolean(markdown) && !isMdxModal
+  const isDocumentModal = isCodeModal || isMarkdownModal || isMdxModal
 
   useEffect(() => {
     if (!open) {
@@ -148,7 +152,7 @@ export default function Modal({
       highlighter.dispose()
     }
 
-    highlightCode()
+    void highlightCode()
 
     return () => {
       cancelled = true
@@ -218,6 +222,21 @@ export default function Modal({
                     '<code class="text-[#839496]">Cargando código...</code>',
                 }}
               />
+            </div>
+          </div>
+        ) : isMdxModal ? (
+          <div className='pt-2'>
+            <div className='mb-5 flex items-center gap-3'>
+              {Icon && <Icon className='h-6 w-6 text-primary' />}
+
+              <h2 className='text-xl font-bold text-title'>
+                {title ?? 'Documentación del componente'}
+              </h2>
+            </div>
+
+            <div
+              className={`max-h-[70vh] overflow-auto rounded-xl border border-border bg-surface p-5 text-sm ${className}`}>
+              <MdxRenderer source={mdx ?? ''} />
             </div>
           </div>
         ) : isMarkdownModal ? (

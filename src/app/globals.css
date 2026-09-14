@@ -23,11 +23,6 @@
   --magenta: #d33682;
   --violet: #6c71c4;
   --orange: #cb4b16;
-
-  /*
-  --mobile-header-height: 4rem;
-  --section-offset: calc(var(--mobile-header-height) + 1px);
-  */
   }
 
 html.dark {

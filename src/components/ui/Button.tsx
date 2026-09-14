@@ -24,15 +24,15 @@ const base =
 
 const variants = {
   primary:
-    'rounded-full bg-background px-4 py-1 text-title hover:bg-muted hover:text-link',
+    'rounded-full bg-background px-4 py-1 text-surface2 hover:bg-muted hover:text-surface',
 
   secondary:
-    'rounded-lg bg-muted text-link hover:border-secondary hover:brightness-105',
+    'rounded-lg bg-surface text-link hover:border-secondary hover:brightness-115',
 
   ghost:
-    'rounded-lg bg-background text-foreground hover:border-secondary hover:bg-muted hover:text-link',
+    'rounded-lg bg-background text-foreground hover:border-secondary hover:bg-muted hover:text-surface',
 
-  menu: 'block w-full p-4 text-center text-xl font-bold text-title transition hover:bg-muted',
+  menu: 'block w-full p-4 text-center text-xl font-bold text-title transition hover:bg-muted hover:text-surface',
 }
 
 const sizes = {

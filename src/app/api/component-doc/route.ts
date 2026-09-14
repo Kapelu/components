@@ -16,8 +16,20 @@ export async function GET(request: Request) {
 
   const relativePath = docPath.slice('src/doc/'.length)
 
-  if (!relativePath || relativePath.includes('..') || path.isAbsolute(relativePath)) {
+  if (
+    !relativePath ||
+    relativePath.includes('..') ||
+    path.isAbsolute(relativePath)
+  ) {
     return new NextResponse('Ruta de documentación no válida.', {
+      status: 400,
+    })
+  }
+
+  const extension = path.extname(relativePath).toLowerCase()
+
+  if (extension !== '.mdx' && extension !== '.md') {
+    return new NextResponse('Formato de documentación no válido.', {
       status: 400,
     })
   }
@@ -35,7 +47,7 @@ export async function GET(request: Request) {
 
     return new NextResponse(documentation, {
       headers: {
-        'Content-Type': 'text/markdown; charset=utf-8',
+        'Content-Type': 'text/plain; charset=utf-8',
       },
     })
   } catch {

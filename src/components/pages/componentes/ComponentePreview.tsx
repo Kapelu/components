@@ -35,7 +35,7 @@ export default function ComponentePreview({
         onClick={handleShowCode}
         aria-label='Ver código del componente'
         title='Ver código'
-        className='absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface text-muted transition-colors hover:bg-muted hover:text-heading'>
+        className='absolute top-3 right-3 flex h-9 w-9 items-center justify-center rounded-md border border-border bg-surface text-muted transition-colors hover:bg-muted hover:text-surface'>
         <CodeBracketIcon className='h-5 w-5' />
       </button>
 

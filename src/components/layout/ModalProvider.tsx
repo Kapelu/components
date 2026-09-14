@@ -25,6 +25,7 @@ export interface ModalOptions {
   messages?: string[]
   code?: string | null
   markdown?: string | null
+  mdx?: string | null
   codeLanguage?: string
   redirectTo?: string | null
   redirectSeconds?: number
@@ -56,10 +57,11 @@ export function ModalProvider({ children }: { children: ReactNode }) {
     messages: [] as string[],
     code: null as string | null,
     markdown: null as string | null,
+    mdx: null as string | null,
     codeLanguage: 'tsx',
     redirectTo: null as string | null,
     redirectSeconds: 5,
-    buttonText: 'Aceptar',
+    /* buttonText: 'Aceptar', */
     title: undefined as string | undefined,
     className: undefined as string | undefined,
   })
@@ -74,10 +76,11 @@ export function ModalProvider({ children }: { children: ReactNode }) {
       messages: modal.messages ?? [],
       code: modal.code ?? null,
       markdown: modal.markdown ?? null,
+      mdx: modal.mdx ?? null,
       codeLanguage: modal.codeLanguage ?? 'tsx',
       redirectTo: modal.redirectTo ?? null,
       redirectSeconds: modal.redirectSeconds ?? 5,
-      buttonText: modal.buttonText ?? 'Aceptar',
+      /* buttonText: modal.buttonText ?? 'Aceptar', */
       title: modal.title,
       className: modal.className,
     })
@@ -116,6 +119,7 @@ export function ModalProvider({ children }: { children: ReactNode }) {
         messages={options.messages}
         code={options.code}
         markdown={options.markdown}
+        mdx={options.mdx}
         title={options.title}
         codeLanguage={options.codeLanguage}
         redirectTo={options.redirectTo}
