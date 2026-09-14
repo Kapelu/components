@@ -1,71 +1,93 @@
-`Button` es un componente reutilizable que centraliza la apariencia y el comportamiento de botones y enlaces.
+`Button` es un componente reutilizable que centraliza la apariencia, el comportamiento y la interacción de botones y enlaces dentro de la aplicación.
 
-Puede utilizarse para:
+El componente está diseñado para cubrir los principales casos de uso de la interfaz sin necesidad de crear componentes separados para botones y enlaces.
 
-- Botones normales.
-- Botones de formularios.
-- Acciones.
-- Enlaces internos.
+## Características
+
+- 4 variantes visuales.
+- 3 tamaños.
+- Estado de carga (`loading`).
+- Estado deshabilitado (`disabled`).
+- Eventos estándar de React.
+- Integración con formularios.
+- Navegación interna mediante `next/link`.
 - Enlaces externos.
-- Botones de navegación.
-- Botones con estado de carga.
-- Botones con diferentes tamaños.
-- Botones con estilos personalizados.
-- Elementos de menú.
+- Descargas.
+- Clases Tailwind personalizadas.
+- Color de fondo personalizado.
+- Tamaño de texto personalizado.
+- Contenido React arbitrario.
+- Soporte para iconos.
 
-La característica principal es que el componente determina automáticamente qué elemento HTML renderizar.
+Una de sus principales características es que determina automáticamente qué elemento HTML utilizar según la presencia de `href`.
 
-#### Sin `href` Renderiza:
+| Configuración | Elemento renderizado |
+|---|---|
+| Sin `href` | `<button>` |
+| Con `href` | `<Link>` |
 
-```tsx
-<button>
-```
-
-#### Con `href` Renderiza:
-
-```tsx
-<Link>
-```
-
-Por lo tanto, no es necesario crear un componente separado para botones y enlaces.
+De esta forma, un único componente puede utilizarse tanto para acciones como para navegación.
 
 ---
-# Forma de uso
+
+# Dependencias
+
+El componente utiliza [`clsx`](https://github.com/lukeed/clsx) para combinar dinámicamente las clases CSS correspondientes a la variante, el tamaño, el estado de carga y las clases personalizadas.
+
+La dependencia es necesaria para el funcionamiento de `Button`.
+
+Instalar con:
+
+```bash
+pnpm add clsx
+```
+
+---
+
+# Instalación
+
+El componente puede importarse directamente desde:
 
 ```tsx
-import Button from "@/components/ui/Button"
+import Button from '@/components/ui/Button'
+```
+
+Ejemplo básico:
+
+```tsx
+import Button from '@/components/ui/Button'
 
 export default function Page() {
   return (
-    <Button variant="primary"> Click Me!</Button>
+    <Button variant="primary">
+      Guardar
+    </Button>
   )
 }
 ```
 
 ---
 
-# Variantes disponibles
+# Variantes
 
-El componente dispone de cuatro variantes:
+`Button` dispone de cuatro variantes:
 
 ```ts
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'menu'
 ```
-
-Las variantes son:
 
 | Variante | Uso principal |
 |---|---|
 | `primary` | Acción principal |
 | `secondary` | Acción secundaria |
 | `ghost` | Acción discreta |
-| `menu` | Elemento de menú |
+| `menu` | Navegación y elementos de menú |
 
 ---
 
-## Variante `primary`
+## `primary`
 
-Es la variante predeterminada.
+Es la variante predeterminada y está destinada a las acciones principales de la interfaz.
 
 ```tsx
 <Button>
@@ -81,6 +103,8 @@ También puede especificarse explícitamente:
 </Button>
 ```
 
+### Estilos
+
 Utiliza:
 
 ```text
@@ -93,9 +117,9 @@ hover:bg-muted
 hover:text-link
 ```
 
-### Usos recomendados
+### Uso recomendado
 
-Ideal para acciones principales como:
+Es apropiada para acciones como:
 
 - Guardar.
 - Crear.
@@ -115,15 +139,17 @@ Ejemplo:
 
 ---
 
-## Variante `secondary`
+## `secondary`
 
-Está pensada para acciones secundarias.
+Está destinada a acciones secundarias o complementarias.
 
 ```tsx
 <Button variant="secondary">
   Cancelar
 </Button>
 ```
+
+### Estilos
 
 Utiliza:
 
@@ -135,7 +161,7 @@ hover:border-secondary
 hover:brightness-105
 ```
 
-### Usos recomendados
+### Uso recomendado
 
 Por ejemplo:
 
@@ -162,15 +188,17 @@ Ejemplo:
 
 ---
 
-## Variante `ghost`
+## `ghost`
 
-Es una variante más discreta.
+Es una variante de menor peso visual, adecuada para acciones auxiliares.
 
 ```tsx
 <Button variant="ghost">
   Editar
 </Button>
 ```
+
+### Estilos
 
 Utiliza:
 
@@ -183,9 +211,9 @@ hover:bg-muted
 hover:text-link
 ```
 
-### Usos recomendados
+### Uso recomendado
 
-Es apropiada para acciones que no deberían tener tanto peso visual:
+Es apropiada para acciones como:
 
 - Editar.
 - Ver.
@@ -204,15 +232,17 @@ Ejemplo:
 
 ---
 
-## Variante `menu`
+## `menu`
 
-Está diseñada específicamente para elementos de navegación o menús.
+Está diseñada específicamente para elementos de navegación y menús.
 
 ```tsx
 <Button variant="menu">
   Empleados
 </Button>
 ```
+
+### Estilos
 
 Utiliza:
 
@@ -228,9 +258,7 @@ transition
 hover:bg-muted
 ```
 
-### Usos recomendados
-
-Por ejemplo:
+### Uso recomendado
 
 ```tsx
 <nav>
@@ -259,13 +287,13 @@ También puede utilizarse con `href`:
 </Button>
 ```
 
-En este caso se renderiza como un `Link`.
+En este caso, el componente se renderiza como un `Link`.
 
 ---
 
 # Tamaños
 
-El componente tiene tres tamaños:
+El componente dispone de tres tamaños:
 
 ```ts
 type ButtonSize = 'sm' | 'md' | 'lg'
@@ -277,9 +305,13 @@ type ButtonSize = 'sm' | 'md' | 'lg'
 | `md` | 40px | `text-sm` |
 | `lg` | 48px | `text-base` |
 
+El tamaño predeterminado es `md`.
+
 ---
 
 ## `sm`
+
+Está pensado para interfaces compactas y elementos que necesitan ocupar poco espacio.
 
 ```tsx
 <Button size="sm">
@@ -287,7 +319,7 @@ type ButtonSize = 'sm' | 'md' | 'lg'
 </Button>
 ```
 
-Clases:
+### Estilos
 
 ```text
 h-8
@@ -295,7 +327,7 @@ px-3
 text-sm
 ```
 
-Ideal para:
+### Uso recomendado
 
 - Tablas.
 - Acciones pequeñas.
@@ -306,7 +338,7 @@ Ideal para:
 
 ## `md`
 
-Es el tamaño predeterminado.
+Es el tamaño predeterminado y está pensado para la mayoría de las acciones de la aplicación.
 
 ```tsx
 <Button size="md">
@@ -314,11 +346,11 @@ Es el tamaño predeterminado.
 </Button>
 ```
 
-Ideal para la mayoría de las acciones de la aplicación.
-
 ---
 
 ## `lg`
+
+Está pensado para acciones que necesitan mayor presencia visual.
 
 ```tsx
 <Button size="lg">
@@ -326,7 +358,7 @@ Ideal para la mayoría de las acciones de la aplicación.
 </Button>
 ```
 
-Clases:
+### Estilos
 
 ```text
 h-12
@@ -334,7 +366,7 @@ px-6
 text-base
 ```
 
-Ideal para:
+### Uso recomendado
 
 - Acciones importantes.
 - Formularios.
@@ -343,15 +375,9 @@ Ideal para:
 
 ---
 
-# Estado `loading`
+# Estado de carga
 
-El componente soporta un estado de carga mediante:
-
-```tsx
-loading
-```
-
-Ejemplo:
+El componente incorpora un estado de carga mediante la propiedad `loading`.
 
 ```tsx
 <Button loading>
@@ -361,42 +387,35 @@ Ejemplo:
 
 Cuando `loading` es `true`:
 
-El botón queda deshabilitado.
+1. El botón queda deshabilitado.
 2. Se agrega `cursor-wait`.
 3. Se agrega `opacity-70`.
-4. El contenido se reemplaza por:
+4. El contenido se reemplaza por `Cargando...`.
 
-```text
-Cargando...
-```
-
-Internamente:
+Internamente se utiliza:
 
 ```tsx
 disabled={disabled || loading}
 ```
 
-Por lo tanto:
+Por lo tanto, mientras la operación está en progreso, el usuario no puede ejecutar nuevamente la acción.
+
+Ejemplo:
 
 ```tsx
-<Button loading>
-  Guardar
+<Button
+  loading={loading}
+  onClick={handleSave}
+>
+  Guardar empleado
 </Button>
 ```
 
-produce visualmente:
-
-```text
-Cargando...
-```
-
-y evita que el usuario vuelva a ejecutar la acción mientras está cargando.
-
 ---
 
-# Botón deshabilitado
+# Estado deshabilitado
 
-Puede utilizarse la prop estándar de HTML:
+El componente admite la propiedad estándar `disabled` de HTML:
 
 ```tsx
 <Button disabled>
@@ -404,23 +423,21 @@ Puede utilizarse la prop estándar de HTML:
 </Button>
 ```
 
-El componente aplica automáticamente:
+Cuando está deshabilitado, aplica:
 
 ```text
 disabled:pointer-events-none
 disabled:opacity-50
 ```
 
-Esto hace que el botón:
-
-- No pueda interactuar.
-- Se vea atenuado.
+Esto evita la interacción y proporciona una representación visual del estado deshabilitado.
 
 ---
 
-# Uso con eventos
+# Eventos
 
-Como `ButtonProps` extiende: `React.ButtonHTMLAttributes<HTMLButtonElement>` permite utilizar las propiedades estándar de un botón HTML.
+Al extender las propiedades estándar de un botón HTML, `Button` permite utilizar eventos de React.
+
 Por ejemplo:
 
 ```tsx
@@ -429,7 +446,7 @@ Por ejemplo:
 </Button>
 ```
 
-También:
+También puede utilizar funciones:
 
 ```tsx
 <Button onClick={handleSave}>
@@ -439,9 +456,11 @@ También:
 
 ---
 
-## Uso con formularios
+# Formularios
 
-Puede utilizarse como botón de envío:
+`Button` puede utilizarse directamente dentro de formularios.
+
+## Submit
 
 ```tsx
 <form onSubmit={handleSubmit}>
@@ -451,22 +470,23 @@ Puede utilizarse como botón de envío:
 </form>
 ```
 
-También puede utilizarse para cancelar:
+## Cancelación
 
 ```tsx
-<Button type="button">
-  Cancelar
-</Button>
+<form>
+  <Button type="button">
+    Cancelar
+  </Button>
+</form>
 ```
 
-Esto es importante porque el tipo predeterminado de un `<button>` HTML dentro de un formulario puede comportarse como `submit`.
+Es importante utilizar `type="button"` cuando el botón no debe enviar el formulario.
 
 ---
 
-## Uso como enlace interno
+# Navegación interna
 
-Si se proporciona: `href` el componente utiliza `next/link`.
-Ejemplo:
+Cuando se proporciona `href`, el componente utiliza `next/link`.
 
 ```tsx
 <Button href="/empleados">
@@ -474,7 +494,7 @@ Ejemplo:
 </Button>
 ```
 
-Conceptualmente renderiza:
+Conceptualmente, el resultado es:
 
 ```tsx
 <Link href="/empleados">
@@ -482,13 +502,13 @@ Conceptualmente renderiza:
 </Link>
 ```
 
-Esto permite utilizar el componente para navegación interna sin crear otro componente.
+Esto permite utilizar el mismo componente para acciones y navegación interna.
 
 ---
 
-## Enlaces con variantes
+# Enlaces con variantes
 
-Las variantes funcionan también con `href`.Por ejemplo:
+Las variantes también funcionan cuando `Button` se utiliza como enlace.
 
 ```tsx
 <Button
@@ -499,8 +519,6 @@ Las variantes funcionan también con `href`.Por ejemplo:
 </Button>
 ```
 
-O:
-
 ```tsx
 <Button
   href="/rrhh/empleados"
@@ -510,7 +528,7 @@ O:
 </Button>
 ```
 
-También:
+También es posible utilizar la variante `menu`:
 
 ```tsx
 <Button
@@ -523,16 +541,9 @@ También:
 
 ---
 
-## Enlaces externos
+# Enlaces externos
 
-El componente acepta:
-
-```ts
-target?: string
-rel?: string
-```
-
-Por ejemplo:
+El componente permite utilizar propiedades estándar de enlaces como `target` y `rel`.
 
 ```tsx
 <Button
@@ -544,19 +555,13 @@ Por ejemplo:
 </Button>
 ```
 
-Esto permite utilizar el componente también para enlaces externos.
+Esto permite utilizar el mismo componente para enlaces internos y externos.
 
 ---
 
-## Descargas
+# Descargas
 
-También soporta:
-
-```ts
-download?: string
-```
-
-Ejemplo:
+También admite la propiedad `download`.
 
 ```tsx
 <Button
@@ -569,15 +574,9 @@ Ejemplo:
 
 ---
 
-## Clases personalizadas
+# Clases personalizadas
 
-El componente permite agregar clases mediante:
-
-```tsx
-className
-```
-
-Ejemplo:
+Es posible agregar clases adicionales mediante `className`. en este caso 
 
 ```tsx
 <Button className="w-full">
@@ -585,7 +584,7 @@ Ejemplo:
 </Button>
 ```
 
-También:
+También pueden combinarse varias clases:
 
 ```tsx
 <Button className="mt-4 w-full">
@@ -593,13 +592,13 @@ También:
 </Button>
 ```
 
-Las clases proporcionadas por el usuario se combinan con las clases internas mediante `clsx`.
+Las clases proporcionadas mediante `className` se combinan con las clases internas del componente mediante `clsx`.
 
 ---
 
-## Color de fondo personalizado
+# Color de fondo personalizado
 
-Existe una prop específica:
+El componente dispone de la propiedad `backgroundColor`.
 
 ```ts
 backgroundColor?: string
@@ -613,7 +612,7 @@ Ejemplo:
 </Button>
 ```
 
-Esto genera internamente:
+Internamente se aplica mediante estilos inline:
 
 ```tsx
 style={{
@@ -621,7 +620,7 @@ style={{
 }}
 ```
 
-También puede utilizar valores CSS:
+También pueden utilizarse variables CSS:
 
 ```tsx
 <Button backgroundColor="var(--color-brand)">
@@ -631,9 +630,9 @@ También puede utilizar valores CSS:
 
 ---
 
-## Tamaño de texto personalizado
+# Tamaño de texto personalizado
 
-También existe:
+La propiedad `textSize` permite modificar el tamaño del texto.
 
 ```ts
 textSize?: string
@@ -655,7 +654,7 @@ style={{
 }}
 ```
 
-También acepta valores CSS como:
+También acepta otras unidades CSS:
 
 ```tsx
 <Button textSize="1.25rem">
@@ -665,11 +664,11 @@ También acepta valores CSS como:
 
 ---
 
-## Combinación de propiedades
+# Combinación de propiedades
 
-Las diferentes propiedades pueden combinarse.
+Las diferentes propiedades pueden combinarse en un mismo componente.
 
-Ejemplo:
+Por ejemplo:
 
 ```tsx
 <Button
@@ -695,13 +694,11 @@ Otro ejemplo:
 
 ---
 
-## Uso con iconos
+# Contenido e iconos
 
-El componente acepta cualquier `React.ReactNode` como `children`.
+`children` acepta `React.ReactNode`, por lo que el componente puede contener texto, iconos u otros elementos React.
 
-Por lo tanto, puede utilizarse con iconos.
-
-Ejemplo:
+## Icono antes del texto
 
 ```tsx
 <Button>
@@ -710,7 +707,7 @@ Ejemplo:
 </Button>
 ```
 
-También:
+## Icono después del texto
 
 ```tsx
 <Button>
@@ -719,7 +716,7 @@ También:
 </Button>
 ```
 
-Y:
+## Icono con descripción
 
 ```tsx
 <Button>
@@ -731,17 +728,20 @@ Y:
 La clase base:
 
 ```text
-inline-flex items-center justify-center
+inline-flex
+items-center
+justify-center
 ```
 
 permite alinear correctamente los elementos internos.
 
 ---
 
-## Uso con contenido complejo
+# Contenido complejo
 
-Como `children` es: `React.ReactNode` puede contener diferentes elementos React.
-Ejemplo:
+Al aceptar `React.ReactNode`, `children` puede contener estructuras React más complejas.
+
+Por ejemplo:
 
 ```tsx
 <Button>
@@ -758,20 +758,20 @@ También:
 </Button>
 ```
 
-El componente base contiene reglas específicas para elementos `<p>`:
+El componente contiene reglas específicas para elementos `<p>`:
 
 ```text
 [&>p]:m-0
 [&>p]:leading-none
 ```
 
-Esto elimina el margen del párrafo y normaliza su altura de línea.
+Estas reglas eliminan el margen predeterminado del párrafo y normalizan su altura de línea.
 
 ---
 
-## Ejemplo completo
+# Ejemplo completo
 
-Una página podría utilizar las diferentes variantes de esta manera:
+Una interfaz puede combinar las diferentes variantes de esta manera:
 
 ```tsx
 <div className="flex gap-2">
@@ -795,7 +795,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-## Ejemplo de formulario
+# Ejemplo de formulario
 
 ```tsx
 <form onSubmit={handleSubmit}>
@@ -821,7 +821,7 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-## Ejemplo de navegación
+# Ejemplo de navegación
 
 ```tsx
 <nav>
@@ -850,36 +850,34 @@ Una página podría utilizar las diferentes variantes de esta manera:
 
 ---
 
-## API del componente
+# API
 
 ## Props propias
 
 | Prop | Tipo | Predeterminado | Descripción |
 |---|---|---|---|
 | `variant` | `'primary' \| 'secondary' \| 'ghost' \| 'menu'` | `'primary'` | Variante visual |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Tamaño |
-| `loading` | `boolean` | `false` | Estado de carga |
-| `href` | `string` | — | Convierte el componente en `Link` |
-| `target` | `string` | — | Target del enlace |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Tamaño del componente |
+| `loading` | `boolean` | `false` | Indica si el componente está en estado de carga |
+| `href` | `string` | — | Convierte el componente en un `Link` |
+| `target` | `string` | — | Destino del enlace |
 | `rel` | `string` | — | Relación del enlace |
-| `download` | `string` | — | Descarga del recurso |
+| `download` | `string` | — | Nombre del recurso descargado |
 | `backgroundColor` | `string` | — | Color de fondo personalizado |
 | `textSize` | `string` | — | Tamaño de texto personalizado |
-| `children` | `React.ReactNode` | requerido | Contenido |
-
----
+| `children` | `React.ReactNode` | requerido | Contenido del componente |
 
 ## Props heredadas de HTML
 
-Al extender:
+El componente extiende:
 
 ```ts
 React.ButtonHTMLAttributes<HTMLButtonElement>
 ```
 
-también permite propiedades estándar de `<button>` como:
+Por lo tanto, también admite las propiedades estándar de un elemento `<button>`, incluyendo:
 
-```tsx
+```text
 type
 disabled
 onClick
@@ -907,9 +905,43 @@ Por ejemplo:
 
 ---
 
-## Comportamiento según `href`
+# Renderizado dinámico
 
-La lógica principal es:
+El comportamiento principal del componente depende de la propiedad `href`.
+
+## Sin `href`
+
+```tsx
+<Button>
+  Guardar
+</Button>
+```
+
+El componente renderiza conceptualmente:
+
+```html
+<button>
+  Guardar
+</button>
+```
+
+## Con `href`
+
+```tsx
+<Button href="/empleados">
+  Empleados
+</Button>
+```
+
+El componente renderiza conceptualmente:
+
+```tsx
+<Link href="/empleados">
+  Empleados
+</Link>
+```
+
+La lógica principal puede resumirse como:
 
 ```tsx
 if (href) {
@@ -919,45 +951,13 @@ if (href) {
 return <button ... />
 ```
 
-Por lo tanto:
-
-### Sin `href`
-
-```tsx
-<Button>
-  Guardar
-</Button>
-```
-
-Resultado:
-
-```html
-<button>
-  Guardar
-</button>
-```
-
-### Con `href`
-
-```tsx
-<Button href="/empleados">
-  Empleados
-</Button>
-```
-
-Resultado conceptual:
-
-```tsx
-<Link href="/empleados">
-  Empleados
-</Link>
-```
-
 ---
 
-## Arquitectura visual
+# Arquitectura de estilos
 
-El componente construye sus clases mediante:
+Las clases visuales se construyen mediante `clsx`.
+
+Conceptualmente:
 
 ```tsx
 const classes = clsx(
@@ -969,7 +969,7 @@ const classes = clsx(
 )
 ```
 
-Esto significa que las clases finales se construyen a partir de cuatro niveles:
+Las clases finales se construyen a partir de diferentes niveles:
 
 ```text
 base
@@ -995,7 +995,7 @@ Por ejemplo:
 </Button>
 ```
 
-combina:
+combina conceptualmente:
 
 ```text
 base
@@ -1007,16 +1007,18 @@ lg
 w-full
 ```
 
+Esto permite mantener centralizada la apariencia del componente y, al mismo tiempo, proporcionar personalización cuando sea necesaria.
+
 ---
 
-## Resumen
+# Resumen
 
-`Button.tsx` es un componente de propósito general que permite centralizar botones y enlaces dentro de la aplicación.
+`Button` es un componente de propósito general diseñado para centralizar botones y enlaces dentro de la aplicación.
 
 Sus principales capacidades son:
 
-- 4 variantes visuales.
-- 3 tamaños.
+- **4 variantes:** `primary`, `secondary`, `ghost` y `menu`.
+- **3 tamaños:** `sm`, `md` y `lg`.
 - Estado `loading`.
 - Estado `disabled`.
 - Eventos de React.
@@ -1030,19 +1032,32 @@ Sus principales capacidades son:
 - Contenido React arbitrario.
 - Soporte para iconos.
 
-La API básica puede resumirse así:
+## API mínima
+
+Para una acción estándar:
 
 ```tsx
 <Button
   variant="primary"
   size="md"
-  loading={false}
 >
   Guardar
 </Button>
 ```
 
-Y para navegación:
+Para una acción con estado de carga:
+
+```tsx
+<Button
+  variant="primary"
+  size="md"
+  loading={loading}
+>
+  Guardar
+</Button>
+```
+
+Para navegación:
 
 ```tsx
 <Button
@@ -1053,4 +1068,4 @@ Y para navegación:
 </Button>
 ```
 
-De esta manera, un único componente puede cubrir la mayoría de los casos de uso de botones y enlaces de la interfaz.
+De esta manera, `Button` proporciona una única interfaz reutilizable para la mayoría de los casos de uso relacionados con acciones y navegación dentro de la aplicación.

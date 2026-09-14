@@ -1,9 +1,108 @@
+'use client'
+
+import { useEffect, useState, type ReactNode } from 'react'
+
 import ReactMarkdown from 'react-markdown'
+
 import remarkGfm from 'remark-gfm'
+
+import { createHighlighter } from 'shiki'
 
 interface StyleMarkdownProps {
   children: string
   className?: string
+}
+
+interface CodeBlockProps {
+  code: string
+  language: string
+}
+
+let highlighterPromise: ReturnType<typeof createHighlighter> | null = null
+
+function getHighlighter() {
+  if (!highlighterPromise) {
+    highlighterPromise = createHighlighter({
+      themes: ['solarized-dark'],
+      langs: [
+        'tsx',
+        'ts',
+        'jsx',
+        'js',
+        'json',
+        'bash',
+        'shell',
+        'css',
+        'html',
+        'md',
+        'yaml',
+      ],
+    })
+  }
+
+  return highlighterPromise
+}
+
+function CodeBlock({ code, language }: CodeBlockProps) {
+  const [highlightedCode, setHighlightedCode] = useState('')
+
+  useEffect(() => {
+    let cancelled = false
+async function highlight() {
+  const highlighter = await getHighlighter()
+
+  const supportedLanguages = [
+    'tsx',
+    'ts',
+    'jsx',
+    'js',
+    'json',
+    'bash',
+    'shell',
+    'css',
+    'html',
+    'md',
+    'yaml',
+  ]
+
+  const supportedLanguage = supportedLanguages.includes(language)
+    ? language
+    : 'tsx'
+
+  const html = highlighter.codeToHtml(code, {
+    lang: supportedLanguage,
+    theme: 'solarized-dark',
+  })
+
+  if (!cancelled) {
+    setHighlightedCode(html)
+  }
+}
+
+highlight()
+
+return () => {
+  cancelled = true
+}
+  }, [code, language])
+
+  if (!highlightedCode) {
+    return (
+      <pre className='my-6 max-h-[70vh] overflow-auto rounded-xl border border-[#586e75] bg-surface p-5 text-left text-sm leading-relaxed'>
+        {' '}
+        <code className='text-text'>{code}</code>{' '}
+      </pre>
+    )
+  }
+
+  return (
+    <pre
+      className='my-6 max-h-[70vh] overflow-auto rounded-xl border border-[#586e75] bg-[#002b36] p-5 text-left text-sm leading-relaxed'
+      dangerouslySetInnerHTML={{
+        __html: highlightedCode,
+      }}
+    />
+  )
 }
 
 export default function StyleMarkdown({
@@ -17,16 +116,16 @@ export default function StyleMarkdown({
         components={{
           p: ({ children }) => (
             <p className='mb-4 leading-7 text-base text-foreground last:mb-0'>
-              {children}
+              {children}{' '}
             </p>
           ),
 
           ul: ({ children }) => (
-            <ul className='my-6 text-base space-y-3'>{children}</ul>
+            <ul className='my-6 space-y-3 text-base'>{children}</ul>
           ),
 
           ol: ({ children }) => (
-            <ol className='mb-4 ml-6 text-base list-decimal space-y-2'>
+            <ol className='mb-4 ml-6 list-decimal space-y-2 text-base'>
               {children}
             </ol>
           ),
@@ -59,11 +158,46 @@ export default function StyleMarkdown({
             <em className='italic text-muted'>{children}</em>
           ),
 
-          code: ({ children }) => (
-            <code className='rounded px-1.5 py-0.5 font-mono text-primary'>
-              {children}
-            </code>
-          ),
+          code: ({ children, className }) => {
+            const language = className?.match(/language-(\w+)/)?.[1]
+
+            if (language) {
+              return <code className='font-mono text-sm'>{children}</code>
+            }
+
+            return (
+              <code className='rounded bg-surface2 px-1.5 py-0.5 font-mono text-xl text-primary'>
+                {children}
+              </code>
+            )
+          },
+
+          pre: ({ children }) => {
+            let code = ''
+            let language = 'tsx'
+
+            const child = children as ReactNode
+
+            if (
+              child &&
+              typeof child === 'object' &&
+              'props' in child &&
+              child.props
+            ) {
+              const props = child.props as {
+                children?: ReactNode
+                className?: string
+              }
+
+              code = String(props.children ?? '').replace(/\n$/, '')
+
+              const languageMatch = props.className?.match(/language-(\w+)/)
+
+              language = languageMatch?.[1] ?? 'tsx'
+            }
+
+            return <CodeBlock code={code} language={language} />
+          },
 
           h1: ({ children }) => (
             <h1 className='mb-6 mt-10 text-center text-4xl font-bold tracking-tight'>
