@@ -105,6 +105,7 @@ export default function Input({
             className={clsx(
               base,
               'h-12',
+              isPassword && 'text-2xl! tracking-widest',
               icon ? 'pl-12' : 'pl-4',
               isPassword ? 'pr-12' : 'pr-4',
               !floating && 'placeholder:text-muted',
