@@ -1,4 +1,4 @@
-import type { ComponentCatalogItem } from './types'
+import type { ComponentCatalogItem } from '../../../lib/types'
 
 interface ComponentesNavProps {
   items: ComponentCatalogItem[]

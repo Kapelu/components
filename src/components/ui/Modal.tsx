@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 
 import { createHighlighter } from 'shiki'
 
-import MdxRenderer from '@/components/pages/componentes/MdxRenderer'
-import StyleMarkdown from '@/components/pages/componentes/StyleMarkdown'
+import MdxRenderer from '@/data/MdxRenderer'
+import StyleMarkdown from '@/lib/StyleMarkdown'
 
 type Props = {
   open: boolean

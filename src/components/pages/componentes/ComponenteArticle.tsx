@@ -1,7 +1,7 @@
-import type { ComponentCatalogItem } from './types'
-import ComponentePreview from './ComponentePreview'
-import StyleMarkdown from './StyleMarkdown'
+import StyleMarkdown from '../../../lib/StyleMarkdown'
+import type { ComponentCatalogItem } from '../../../lib/types'
 import ComponenteDocModal from './ComponenteDocModal'
+import ComponentePreview from './ComponentePreview'
 
 interface ComponenteArticleProps {
   item: ComponentCatalogItem

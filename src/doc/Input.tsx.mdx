@@ -1,65 +1,98 @@
+`Input` proporciona una API unificada para trabajar con diferentes tipos de campos HTML, incorporando funcionalidades como labels normales y flotantes, iconos, contraseñas, estados de validación nativos, campos obligatorios y personalización de estilos.
 
-Este componente permite manejar diferentes tipos de entradas mediante una única API, incluyendo:
+El componente puede renderizar un `<input>` o un `<textarea>` dependiendo de la propiedad `multiline`.
 
-- Inputs normales.
-- Inputs con `label`.
-- Inputs con `label` flotante.
-- Inputs con iconos.
-- Inputs de contraseña.
-- Textareas.
+---
+
+## Características
+
+- Input HTML estándar.
+- Textarea mediante `multiline`.
+- Label normal.
+- Label flotante.
+- Integración con iconos mediante `ReactNode`.
+- Soporte para campos de contraseña.
+- Mostrar y ocultar contraseña.
 - Campos obligatorios.
-- Personalización de estilos.
-- Control del número de filas del textarea.
+- Estado `disabled`.
+- `placeholder`.
 - Eventos `onChange`.
-- Estados `disabled`.
 - Tipos HTML estándar.
-
-El componente utiliza `'use client'` porque administra estado interno mediante `useState`.
-
----
-
-## ¿Qué hace?
-
-`Input` es un componente reutilizable para construir campos de formularios. Su principal característica es que puede funcionar como: `<input>` ó `<textarea>` dependiendo de la propiedad `multiline`. Por defecto, es `multiline = false`
-
-> Por lo tanto `<Input />` crea un `<input>`. Mientras que `<Input multiline />` crea un `<textarea>`.
+- Personalización del contenedor.
+- Personalización del campo.
+- Personalización del label.
+- Control de filas del textarea.
+- Redimensionamiento vertical del textarea.
+- Integración directa con Heroicons.
+- Compatibilidad con formularios HTML y React.
 
 ---
 
-### Label normal
+## Uso básico
 
-La propiedad `label?: string` permite mostrar un label encima del campo.
+```tsx
+import Input from '@/components/ui/Input'
+```
 
-Ejemplo:
+El uso más simple del componente es:
 
 ```tsx
 <Input label="Nombre" />
 ```
 
-Visualmente:
+Por defecto, el componente renderiza un elemento `<input>`. 
+
+<Input label="Nombre" />
 
 ```text
-Nombre
-┌──────────────────────┐
-│                      │
-└──────────────────────┘
+multiline = false
+        ↓
+     <input>
 ```
 
-El label solamente aparece de esta manera cuando `floating={false}` que es el valor predeterminado.
+Para renderizar un `<textarea>` se utiliza:
+
+```tsx
+<Input
+  multiline
+  label="Descripción"
+/>
+```
+<Input
+  multiline
+  label="Descripción"
+/>
+
+```text
+multiline = true
+        ↓
+    <textarea>
+```
 
 ---
 
+## Label
+
+La propiedad `label` permite asociar una etiqueta descriptiva al campo.
+
+```tsx
+<Input label="Nombre" />
+```
+
+Por defecto, el label se muestra sobre el campo.
+
 ### Label flotante
 
-El componente permite utilizar labels flotantes mediante `floating`.
+La propiedad `floating` permite convertir el label en un label flotante.
 
-Ejemplo:
+```tsx
+<Input
+  label="Nombre"
+  floating
+/>
+```
 
-`<Input label="Nombre" floating/>`
-
-El label inicialmente aparece dentro del campo. Cuando el usuario enfoca el campo o introduce contenido, el label se desplaza hacia la parte superior.
-
-Conceptualmente:
+El label comienza dentro del campo y se desplaza hacia la parte superior cuando el campo recibe el foco o contiene un valor.
 
 ```text
 ┌──────────────────────┐
@@ -67,7 +100,7 @@ Conceptualmente:
 └──────────────────────┘
 ```
 
-Al enfocar o escribir:
+Al enfocar o introducir contenido:
 
 ```text
 ┌ Nombre ──────────────┐
@@ -75,28 +108,13 @@ Al enfocar o escribir:
 └──────────────────────┘
 ```
 
-El efecto se consigue mediante las clases Tailwind:
-
-```text
-peer-focus:top-0
-peer-focus:text-xs
-peer-focus:font-semibold
-peer-not-placeholder-shown:top-0
-peer-not-placeholder-shown:text-xs
-peer-not-placeholder-shown:font-semibold
-```
+Si `floating` no está definido, su valor es `false`.
 
 ---
 
-# 5. Iconos
+## Iconos
 
-El componente permite agregar un icono mediante:
-
-```ts
-icon?: ReactNode
-```
-
-Por ejemplo:
+La propiedad `icon` permite colocar un icono dentro del campo.
 
 ```tsx
 import { UserIcon } from '@heroicons/react/24/outline'
@@ -107,13 +125,7 @@ import { UserIcon } from '@heroicons/react/24/outline'
 />
 ```
 
-El icono aparece dentro del lado izquierdo del campo.
-
-Cuando existe un icono, el componente automáticamente agrega espacio para evitar que el texto se superponga:
-
-```text
-pl-12
-```
+El componente ajusta automáticamente el espacio interno del campo para evitar que el contenido se superponga con el icono.
 
 Sin icono:
 
@@ -129,22 +141,9 @@ pl-12
 
 ---
 
-# 6. Uso con Heroicons
+## Heroicons
 
-El componente está preparado para trabajar con `ReactNode`, por lo que puede utilizarse directamente con Heroicons.
-
-Ejemplo:
-
-```tsx
-import { UserIcon } from '@heroicons/react/24/outline'
-
-<Input
-  label="Usuario"
-  icon={<UserIcon className="h-5 w-5" />}
-/>
-```
-
-Otro ejemplo:
+`icon` acepta un `ReactNode`, por lo que puede utilizarse directamente con Heroicons.
 
 ```tsx
 import { EnvelopeIcon } from '@heroicons/react/24/outline'
@@ -156,17 +155,25 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline'
 />
 ```
 
----
-
-# 7. Campo de contraseña
-
-El componente tiene soporte específico para:
+También puede combinarse con labels flotantes:
 
 ```tsx
-type="password"
+import { UserIcon } from '@heroicons/react/24/outline'
+
+<Input
+  label="Usuario"
+  floating
+  icon={<UserIcon className="h-5 w-5" />}
+/>
 ```
 
-Ejemplo:
+Cuando se utiliza `floating`, el posicionamiento del label se adapta automáticamente a la presencia del icono.
+
+---
+
+## Contraseña
+
+El componente incorpora un comportamiento específico para campos cuyo `type` es `password`.
 
 ```tsx
 <Input
@@ -175,57 +182,9 @@ Ejemplo:
 />
 ```
 
-Cuando el tipo es `password`, aparece automáticamente un botón con un icono de ojo.
+Cuando se utiliza este tipo, aparece automáticamente un control para mostrar u ocultar el contenido.
 
-Utiliza:
-
-```tsx
-EyeIcon
-```
-
-y:
-
-```tsx
-EyeSlashIcon
-```
-
-de:
-
-```text
-@heroicons/react/24/outline
-```
-
----
-
-# 8. Mostrar y ocultar contraseña
-
-El componente mantiene internamente:
-
-```tsx
-const [showPassword, setShowPassword] = useState(false)
-```
-
-Inicialmente:
-
-```text
-showPassword = false
-```
-
-Por lo tanto:
-
-```tsx
-type="password"
-```
-
-permanece oculto.
-
-Cuando el usuario pulsa el botón:
-
-```tsx
-setShowPassword((prev) => !prev)
-```
-
-el tipo cambia entre:
+El estado se alterna entre:
 
 ```text
 password
@@ -237,56 +196,76 @@ y:
 text
 ```
 
-La lógica es:
+El control utiliza `EyeIcon` y `EyeSlashIcon` de Heroicons.
 
-```tsx
-const inputType =
-  isPassword && showPassword
-    ? 'text'
-    : type
-```
+### Accesibilidad
 
----
-
-# 9. Iconos de contraseña
-
-Cuando la contraseña está oculta:
-
-```tsx
-<EyeIcon />
-```
-
-Cuando está visible:
-
-```tsx
-<EyeSlashIcon />
-```
-
-También cambia automáticamente el atributo:
-
-```tsx
-aria-label
-```
-
-entre:
+El botón incorpora un `aria-label` que cambia según el estado:
 
 ```text
 Mostrar contraseña
 ```
 
-y:
+o:
 
 ```text
 Ocultar contraseña
 ```
 
-Esto proporciona una descripción accesible para el control.
+Esto permite identificar correctamente la acción mediante tecnologías de asistencia.
 
 ---
 
-# 10. Textarea
+## Campos obligatorios
 
-Para crear un textarea:
+La propiedad `required` permite marcar un campo como obligatorio.
+
+```tsx
+<Input
+  label="Nombre"
+  required
+/>
+```
+
+Además del atributo HTML `required`, el componente muestra un indicador visual junto al label:
+
+```text
+Nombre *
+```
+
+El indicador utiliza el estilo:
+
+```text
+text-red-500
+```
+
+y proporciona información adicional mediante:
+
+```html
+title="Campo obligatorio"
+```
+
+También funciona con labels flotantes:
+
+```tsx
+<Input
+  label="Nombre"
+  floating
+  required
+/>
+```
+
+---
+
+## Textarea
+
+Para utilizar el componente como textarea se debe establecer:
+
+```tsx
+multiline
+```
+
+Ejemplo:
 
 ```tsx
 <Input
@@ -295,7 +274,7 @@ Para crear un textarea:
 />
 ```
 
-El componente renderiza:
+El componente renderiza un elemento:
 
 ```html
 <textarea>
@@ -303,20 +282,14 @@ El componente renderiza:
 
 ---
 
-# 11. Número de filas del textarea
+## Filas del textarea
 
-La propiedad:
+La propiedad `textareaRows` permite establecer la cantidad inicial de filas.
 
-```ts
-textareaRows?: number
-```
+Su valor predeterminado es:
 
-permite definir la cantidad inicial de filas.
-
-Por defecto:
-
-```tsx
-textareaRows = 4
+```text
+4
 ```
 
 Ejemplo:
@@ -329,7 +302,7 @@ Ejemplo:
 />
 ```
 
-Esto genera conceptualmente:
+Conceptualmente genera:
 
 ```html
 <textarea rows="6">
@@ -337,44 +310,54 @@ Esto genera conceptualmente:
 
 ---
 
-# 12. Redimensionamiento del textarea
+## Redimensionamiento
 
-El textarea utiliza:
+Los textareas utilizan:
 
 ```text
 resize-y
 ```
 
-Esto permite al usuario cambiar verticalmente su tamaño.
+por lo que pueden redimensionarse verticalmente.
 
-También tiene:
+También cuentan con límites de tamaño:
 
 ```text
 min-h-32
 max-h-64
 ```
 
-Por lo tanto, existe un tamaño mínimo y máximo.
-
-Además utiliza:
+Cuando el contenido supera el espacio disponible se habilita el desplazamiento vertical mediante:
 
 ```text
 overflow-y-auto
 ```
 
-para permitir desplazamiento vertical cuando el contenido supera el espacio disponible.
+---
+
+## Textarea con icono
+
+Los iconos también pueden utilizarse con `multiline`.
+
+```tsx
+import { DocumentTextIcon } from '@heroicons/react/24/outline'
+
+<Input
+  multiline
+  label="Descripción"
+  icon={<DocumentTextIcon className="h-5 w-5" />}
+/>
+```
+
+En un `<input>`, el icono se centra verticalmente.
+
+En un `<textarea>`, el icono se posiciona en la parte superior para adaptarse a la naturaleza multilineal del campo.
 
 ---
 
-# 13. Placeholder
+## Placeholder
 
-El componente soporta:
-
-```tsx
-placeholder
-```
-
-Ejemplo:
+El componente acepta la propiedad HTML estándar `placeholder`.
 
 ```tsx
 <Input
@@ -385,33 +368,19 @@ Ejemplo:
 
 Cuando no se utiliza `floating`, el placeholder se muestra normalmente.
 
----
+### Placeholder con label flotante
 
-# 14. Placeholder con `floating`
-
-Cuando:
-
-```tsx
-floating
-```
-
-está habilitado, el componente utiliza:
+Cuando `floating` está habilitado, el componente utiliza internamente un placeholder compuesto por un espacio:
 
 ```tsx
 placeholder=" "
 ```
 
-Esto es intencional.
+Esto permite utilizar los estados `peer-placeholder-shown` de Tailwind CSS para controlar el comportamiento del label flotante.
 
-El espacio permite que funcionen correctamente las variantes Tailwind:
+El texto visible del label procede de:
 
 ```text
-peer-placeholder-shown
-```
-
-El texto visible del label flotante proviene de:
-
-```tsx
 label || placeholder
 ```
 
@@ -424,205 +393,93 @@ Por ejemplo:
 />
 ```
 
-utiliza:
-
-```text
-Usuario
-```
-
-como label.
+utiliza `Usuario` como texto del label.
 
 ---
 
-# 15. Campo obligatorio
+## Tipos HTML
 
-La propiedad:
-
-```ts
-required?: boolean
-```
-
-permite marcar el campo como obligatorio.
-
-Ejemplo:
-
-```tsx
-<Input
-  label="Nombre"
-  required
-/>
-```
-
-Además del atributo HTML:
-
-```html
-required
-```
-
-el componente muestra:
-
-```text
-*
-```
-
-junto al label.
-
----
-
-# 16. Label obligatorio normal
-
-Con:
-
-```tsx
-<Input
-  label="Nombre"
-  required
-/>
-```
-
-el label muestra:
-
-```text
-Nombre *
-```
-
-El asterisco utiliza:
-
-```text
-text-red-500
-```
-
-y tiene:
-
-```text
-title="Campo obligatorio"
-```
-
----
-
-# 17. Label flotante obligatorio
-
-También funciona con:
-
-```tsx
-<Input
-  label="Nombre"
-  floating
-  required
-/>
-```
-
-El label flotante mostrará:
-
-```text
-Nombre *
-```
-
----
-
-# 18. Tipos de input
-
-Como `InputProps` extiende:
-
-```ts
-InputHTMLAttributes<HTMLInputElement>
-```
-
-el componente admite los tipos HTML habituales.
-
-Por ejemplo:
+El componente mantiene compatibilidad con los tipos estándar de `<input>`.
 
 ### Texto
 
 ```tsx
-<Input type="text" />
+<Input
+  label="Nombre"
+  type="text"
+/>
 ```
 
 ### Email
 
 ```tsx
-<Input type="email" />
+<Input
+  label="Email"
+  type="email"
+/>
 ```
 
 ### Contraseña
 
 ```tsx
-<Input type="password" />
+<Input
+  label="Contraseña"
+  type="password"
+/>
 ```
 
 ### Número
 
 ```tsx
-<Input type="number" />
+<Input
+  label="Edad"
+  type="number"
+/>
 ```
 
 ### Fecha
 
 ```tsx
-<Input type="date" />
+<Input
+  label="Fecha de nacimiento"
+  type="date"
+/>
 ```
 
 ### Hora
 
 ```tsx
-<Input type="time" />
+<Input
+  label="Hora"
+  type="time"
+/>
 ```
 
 ### Teléfono
 
 ```tsx
-<Input type="tel" />
+<Input
+  label="Teléfono"
+  type="tel"
+/>
 ```
 
 ### URL
 
 ```tsx
-<Input type="url" />
+<Input
+  label="Sitio web"
+  type="url"
+/>
 ```
+
+También están disponibles las demás propiedades HTML compatibles con `InputHTMLAttributes<HTMLInputElement>`.
 
 ---
 
-# 19. Uso con formularios
+## Eventos
 
-Puede utilizarse directamente dentro de un formulario:
-
-```tsx
-<form>
-  <Input
-    label="Nombre"
-    name="nombre"
-    required
-  />
-
-  <Input
-    label="Email"
-    name="email"
-    type="email"
-    required
-  />
-
-  <Input
-    label="Contraseña"
-    name="password"
-    type="password"
-    required
-  />
-</form>
-```
-
----
-
-# 20. `onChange`
-
-El componente redefine `onChange` para aceptar tanto inputs como textareas:
-
-```ts
-onChange?: ChangeEventHandler<
-  HTMLInputElement | HTMLTextAreaElement
->
-```
-
-Por ejemplo:
+`onChange` está tipado para funcionar tanto con `<input>` como con `<textarea>`.
 
 ```tsx
 <Input
@@ -633,7 +490,7 @@ Por ejemplo:
 />
 ```
 
-Con `multiline` también funciona:
+El mismo patrón funciona con `multiline`:
 
 ```tsx
 <Input
@@ -645,34 +502,45 @@ Con `multiline` también funciona:
 />
 ```
 
-Esto permite utilizar el mismo patrón de evento para ambos elementos.
+El tipo utilizado es:
+
+```ts
+ChangeEventHandler<
+  HTMLInputElement | HTMLTextAreaElement
+>
+```
 
 ---
 
-# 21. Personalización del contenedor
+## Estado disabled
 
-La propiedad:
-
-```ts
-className?: string
-```
-
-se aplica al contenedor principal:
-
-```tsx
-<div className={className}>
-```
-
-Por ejemplo:
+El componente admite el atributo HTML `disabled`.
 
 ```tsx
 <Input
   label="Nombre"
-  className="w-full max-w-md"
+  disabled
 />
 ```
 
-También:
+Cuando está deshabilitado, el campo utiliza:
+
+```text
+disabled:pointer-events-none
+disabled:opacity-50
+```
+
+Esto proporciona una representación visual consistente del estado deshabilitado.
+
+---
+
+## Personalización
+
+El componente dispone de tres propiedades específicas para personalizar sus diferentes niveles visuales.
+
+### `className`
+
+Se aplica al contenedor principal del componente.
 
 ```tsx
 <Input
@@ -681,29 +549,18 @@ También:
 />
 ```
 
----
-
-# 22. Personalización del input
-
-La propiedad:
-
-```ts
-inputClassName?: string
-```
-
-se aplica directamente al:
+También puede utilizarse para controlar el ancho:
 
 ```tsx
-<input>
+<Input
+  label="Nombre"
+  className="w-full max-w-md"
+/>
 ```
 
-o:
+### `inputClassName`
 
-```tsx
-<textarea>
-```
-
-Ejemplo:
+Se aplica directamente al `<input>` o `<textarea>`.
 
 ```tsx
 <Input
@@ -712,21 +569,9 @@ Ejemplo:
 />
 ```
 
-Esto permite personalizar el campo sin modificar el contenedor.
+### `labelClassName`
 
----
-
-# 23. Personalización del label
-
-La propiedad:
-
-```ts
-labelClassName?: string
-```
-
-permite modificar el estilo del label normal.
-
-Ejemplo:
+Permite personalizar el label normal.
 
 ```tsx
 <Input
@@ -735,7 +580,7 @@ Ejemplo:
 />
 ```
 
-Esto se aplica al `<label>` cuando:
+Esta propiedad afecta al label cuando:
 
 ```tsx
 floating={false}
@@ -743,45 +588,9 @@ floating={false}
 
 ---
 
-# 24. Diferencia entre `className` e `inputClassName`
+## `className` vs `inputClassName`
 
-Es importante distinguir ambas propiedades.
-
-### `className`
-
-Modifica el contenedor:
-
-```tsx
-<div>
-```
-
-Ejemplo:
-
-```tsx
-<Input className="mt-4" />
-```
-
-### `inputClassName`
-
-Modifica el campo:
-
-```tsx
-<input>
-```
-
-o:
-
-```tsx
-<textarea>
-```
-
-Ejemplo:
-
-```tsx
-<Input inputClassName="rounded-full" />
-```
-
-Conceptualmente:
+Estas propiedades tienen responsabilidades diferentes.
 
 ```text
 className
@@ -791,68 +600,89 @@ className
 │   inputClassName              │
 │   ↓                           │
 │   ┌───────────────────────┐   │
-│   │       Input           │   │
+│   │        Input          │   │
 │   └───────────────────────┘   │
 │                               │
 └───────────────────────────────┘
 ```
 
----
-
-# 25. Estilos base
-
-Todos los inputs y textareas comparten:
-
-```text
-peer
-w-full
-border
-border-border
-bg-background
-text-muted
-text-sm
-outline-none
-transition-colors
-disabled:pointer-events-none
-disabled:opacity-50
-focus:border-primary
-focus:ring-1
-focus:ring-primary
-```
-
-Esto proporciona una apariencia consistente entre todos los campos.
+| Propiedad | Elemento afectado |
+|---|---|
+| `className` | Contenedor principal |
+| `inputClassName` | `<input>` o `<textarea>` |
+| `labelClassName` | `<label>` normal |
 
 ---
 
-# 26. Estado `disabled`
+# API
 
-Como hereda las propiedades estándar de:
+## Props propias
+
+| Propiedad | Tipo | Default | Descripción |
+|---|---|---:|---|
+| `label` | `string` | — | Texto del label. |
+| `floating` | `boolean` | `false` | Activa el label flotante. |
+| `icon` | `ReactNode` | — | Icono mostrado dentro del campo. |
+| `className` | `string` | — | Clases aplicadas al contenedor. |
+| `inputClassName` | `string` | — | Clases aplicadas al input o textarea. |
+| `labelClassName` | `string` | — | Clases aplicadas al label normal. |
+| `multiline` | `boolean` | `false` | Renderiza un textarea en lugar de un input. |
+| `textareaRows` | `number` | `4` | Número inicial de filas del textarea. |
+| `required` | `boolean` | — | Marca el campo como obligatorio. |
+| `onChange` | `ChangeEventHandler<HTMLInputElement \| HTMLTextAreaElement>` | — | Evento ejecutado cuando cambia el valor. |
+
+---
+
+## Props HTML heredadas
+
+Además de las propiedades propias, el componente acepta las propiedades compatibles con:
 
 ```ts
 InputHTMLAttributes<HTMLInputElement>
 ```
 
-puede utilizar:
+Se redefinen específicamente:
 
-```tsx
-<Input
-  label="Nombre"
-  disabled
-/>
+```ts
+className
 ```
 
-El campo queda deshabilitado y utiliza:
+y:
+
+```ts
+onChange
+```
+
+para proporcionar el comportamiento propio del componente.
+
+Entre las propiedades HTML disponibles se encuentran:
 
 ```text
-disabled:pointer-events-none
-disabled:opacity-50
+name
+id
+value
+defaultValue
+placeholder
+required
+disabled
+readOnly
+autoComplete
+min
+max
+step
+pattern
+maxLength
+minLength
+type
 ```
+
+y las demás propiedades compatibles con el elemento HTML correspondiente.
 
 ---
 
-# 27. Input con icono
+# Ejemplos
 
-Ejemplo completo:
+## Input con icono
 
 ```tsx
 import { UserIcon } from '@heroicons/react/24/outline'
@@ -866,7 +696,18 @@ import { UserIcon } from '@heroicons/react/24/outline'
 
 ---
 
-# 28. Input con label flotante e icono
+## Input con label flotante
+
+```tsx
+<Input
+  label="Usuario"
+  floating
+/>
+```
+
+---
+
+## Input con label flotante e icono
 
 ```tsx
 import { UserIcon } from '@heroicons/react/24/outline'
@@ -878,21 +719,9 @@ import { UserIcon } from '@heroicons/react/24/outline'
 />
 ```
 
-Cuando existe el icono, el label flotante se posiciona automáticamente utilizando:
-
-```text
-left-12
-```
-
-En ausencia de icono:
-
-```text
-left-4
-```
-
 ---
 
-# 29. Input de contraseña completo
+## Input de contraseña
 
 ```tsx
 import { LockClosedIcon } from '@heroicons/react/24/outline'
@@ -905,11 +734,9 @@ import { LockClosedIcon } from '@heroicons/react/24/outline'
 />
 ```
 
-El componente se encarga automáticamente del botón para mostrar/ocultar la contraseña.
-
 ---
 
-# 30. Textarea completo
+## Textarea
 
 ```tsx
 <Input
@@ -922,51 +749,7 @@ El componente se encarga automáticamente del botón para mostrar/ocultar la con
 
 ---
 
-# 31. Textarea con icono
-
-```tsx
-import { DocumentTextIcon } from '@heroicons/react/24/outline'
-
-<Input
-  multiline
-  label="Descripción"
-  icon={<DocumentTextIcon className="h-5 w-5" />}
-/>
-```
-
-En este caso el icono se coloca en la parte superior del textarea:
-
-```text
-┌────────────────────────────┐
-│  📝                        │
-│                            │
-│  Descripción...            │
-│                            │
-│                            │
-└────────────────────────────┘
-```
-
-Esto ocurre porque el posicionamiento del icono cambia según:
-
-```tsx
-multiline
-```
-
-Para un input:
-
-```text
-top-1/2 -translate-y-1/2
-```
-
-Para un textarea:
-
-```text
-top-4
-```
-
----
-
-# 32. Ejemplo de formulario completo
+## Formulario
 
 ```tsx
 import {
@@ -1010,7 +793,7 @@ import {
 
 ---
 
-# 33. Ejemplo con labels flotantes
+## Labels flotantes
 
 ```tsx
 <Input
@@ -1032,7 +815,7 @@ import {
 
 ---
 
-# 34. Ejemplo con diferentes tipos
+## Diferentes tipos
 
 ```tsx
 <Input
@@ -1063,141 +846,38 @@ import {
 
 ---
 
-# 35. API del componente
+# Comportamiento
 
-## Props propias
+## `multiline`
 
-| Prop | Tipo | Predeterminado | Descripción |
-|---|---|---|---|
-| `label` | `string` | — | Texto del label |
-| `floating` | `boolean` | `false` | Activa el label flotante |
-| `icon` | `ReactNode` | — | Icono dentro del campo |
-| `className` | `string` | — | Clase del contenedor |
-| `inputClassName` | `string` | — | Clase del input/textarea |
-| `labelClassName` | `string` | — | Clase del label |
-| `multiline` | `boolean` | `false` | Convierte el input en textarea |
-| `textareaRows` | `number` | `4` | Filas iniciales del textarea |
-| `onChange` | `ChangeEventHandler<HTMLInputElement \| HTMLTextAreaElement>` | — | Evento de cambio |
-
----
-
-# 36. Props HTML heredadas
-
-El componente hereda las propiedades de:
-
-```ts
-InputHTMLAttributes<HTMLInputElement>
-```
-
-exceptuando:
-
-```ts
-className
-```
-
-y:
-
-```ts
-onChange
-```
-
-porque el componente define sus propias versiones.
-
-Esto permite utilizar propiedades como:
-
-```tsx
-name
-id
-value
-defaultValue
-placeholder
-required
-disabled
-readOnly
-autoComplete
-min
-max
-step
-pattern
-maxLength
-minLength
-type
-```
-
-entre otras propiedades HTML compatibles.
-
----
-
-# 37. Estructura conceptual
-
-El componente tiene esta estructura:
+Determina el elemento HTML que renderiza el componente.
 
 ```text
-Input
-│
-├── Contenedor
-│
-├── Label normal
-│
-└── Relative
-    │
-    ├── Icono
-    │
-    ├── Input
-    │     └── Password toggle
-    │
-    ├── o Textarea
-    │
-    └── Floating label
+false
+ ↓
+<input>
 ```
-
----
-
-# 38. Comportamiento de `multiline`
-
-La propiedad:
-
-```tsx
-multiline
-```
-
-es la que determina qué elemento HTML se utiliza.
 
 ```text
-multiline = false
-        ↓
-     <input>
+true
+ ↓
+<textarea>
 ```
 
-Mientras:
-
-```text
-multiline = true
-        ↓
-    <textarea>
-```
-
-Además modifica automáticamente:
+Además, cuando `multiline` está habilitado, se adaptan automáticamente:
 
 - Posición del icono.
 - Padding.
 - Altura.
 - Redimensionamiento.
 - Overflow.
-- Comportamiento del label flotante.
+- Comportamiento del campo multilineal.
 
 ---
 
-# 39. Comportamiento de contraseña
+## Contraseña
 
-La detección se realiza mediante:
-
-```tsx
-const isPassword =
-  !multiline && type === 'password'
-```
-
-Esto significa que el comportamiento especial de contraseña solamente existe cuando:
+El comportamiento especial de contraseña se activa únicamente cuando se cumplen ambas condiciones:
 
 ```text
 multiline = false
@@ -1206,7 +886,7 @@ multiline = false
 y:
 
 ```text
-type = password
+type = "password"
 ```
 
 Por lo tanto:
@@ -1215,9 +895,9 @@ Por lo tanto:
 <Input type="password" />
 ```
 
-activa el botón de mostrar/ocultar.
+activa el control para mostrar y ocultar la contraseña.
 
-Mientras:
+Mientras que:
 
 ```tsx
 <Input
@@ -1230,70 +910,102 @@ no activa dicho comportamiento.
 
 ---
 
-# 40. Resumen
+# Estilos base
 
-`Input.tsx` es un componente de formulario reutilizable que centraliza diferentes tipos de campos.
+Los campos comparten una base visual consistente:
 
-Sus principales capacidades son:
+```text
+peer
+w-full
+border
+border-border
+bg-background
+text-muted
+text-sm
+outline-none
+transition-colors
+disabled:pointer-events-none
+disabled:opacity-50
+focus:border-primary
+focus:ring-1
+focus:ring-primary
+```
 
-- Input HTML.
-- Textarea.
-- Label normal.
-- Label flotante.
-- Iconos.
-- Password con mostrar/ocultar.
-- Campos obligatorios.
-- Estados disabled.
-- Placeholders.
-- Eventos `onChange`.
-- Diferentes tipos HTML.
-- Personalización del contenedor.
-- Personalización del campo.
-- Personalización del label.
-- Control de filas del textarea.
-- Integración con Heroicons.
-- Integración con formularios React.
+Esto permite mantener una apariencia uniforme entre inputs y textareas.
 
-La utilización más básica es:
+---
 
-```tsx
+# Estructura conceptual
+
+```text
+Input
+│
+├── Contenedor
+│
+├── Label normal
+│
+└── Área relativa
+    │
+    ├── Icono
+    │
+    ├── Input
+    │   └── Password toggle
+    │
+    ├── Textarea
+    │
+    └── Floating label
+```
+
+La estructura interna se adapta automáticamente según las propiedades utilizadas.
+
+---
+
+# Resumen
+
+`Input` centraliza los campos de entrada más habituales en un único componente reutilizable.
+
+Su API permite cubrir los siguientes escenarios:
+
+```text
+<Input />
+```
+
+Input estándar.
+
+```text
 <Input label="Nombre" />
 ```
 
-Con icono:
+Input con label.
 
-```tsx
-<Input
-  label="Usuario"
-  icon={<UserIcon className="h-5 w-5" />}
-/>
+```text
+<Input floating label="Nombre" />
 ```
 
-Con label flotante:
+Input con label flotante.
 
-```tsx
-<Input
-  label="Usuario"
-  floating
-/>
+```text
+<Input icon={...} />
 ```
 
-Como contraseña:
+Input con icono.
 
-```tsx
-<Input
-  label="Contraseña"
-  type="password"
-/>
+```text
+<Input type="password" />
 ```
 
-Como textarea:
+Campo de contraseña.
 
-```tsx
-<Input
-  label="Descripción"
-  multiline
-/>
+```text
+<Input multiline />
 ```
 
-Por lo tanto, el componente puede cubrir prácticamente todos los campos de entrada básicos del sistema utilizando una única API consistente.
+Textarea.
+
+```text
+<Input required />
+```
+
+Campo obligatorio.
+
+Esta combinación permite utilizar una única API consistente para la mayoría de los campos de formularios de la aplicación.

@@ -1,6 +1,6 @@
-import type { ComponentCatalogItem } from '@/components/pages/componentes/types'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import type { ComponentCatalogItem } from '@/lib/types'
 
 export const componentsCatalog: ComponentCatalogItem[] = [
   {
@@ -25,7 +25,7 @@ export const componentsCatalog: ComponentCatalogItem[] = [
     id: 'input',
     label: 'Input',
     description:
-      'Componente reutilizable de entrada de datos para aplicaciones **Next.js + React + TypeScript + Tailwind CSS**.',
+      'Componente reutilizable para la creación de campos de entrada y áreas de texto dentro de formularios. \`<Input>\` proporciona una API unificada para trabajar con diferentes tipos de campos HTML, incorporando funcionalidades como labels normales y flotantes, iconos, contraseñas, estados de validación nativos, campos obligatorios y personalización de estilos.',
     docPath: 'src/doc/Input.tsx.mdx',
     render: <Input placeholder='Escribí tu nombre' floating label='Nombre' />,
     code: '',

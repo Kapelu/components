@@ -13,5 +13,4 @@ export interface ComponentCatalogItem {
   code: string
   sourcePath: string
   docPath: string
-  /* usages: UsageExample[] */
 }

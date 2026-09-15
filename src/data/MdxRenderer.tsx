@@ -1,13 +1,13 @@
 'use client'
 
 import { evaluate } from '@mdx-js/mdx'
-import * as runtime from 'react/jsx-runtime'
-import { useEffect, useState, type ReactNode, type ComponentType } from 'react'
 import type { MDXComponents } from 'mdx/types'
+import { useEffect, useState, type ComponentType, type ReactNode } from 'react'
+import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
 import { createHighlighter } from 'shiki'
 
-import { useMDXComponents } from './MdxComponents'
+import { useMDXComponents } from '../components/ui/MdxComponents'
 
 interface MdxRendererProps {
   source: string
@@ -107,7 +107,9 @@ export default function MdxRenderer({
   source,
   className = '',
 }: MdxRendererProps) {
-  const [Content, setContent] = useState<ComponentType<{ components?: MDXComponents }> | null>(null)
+  const [Content, setContent] = useState<ComponentType<{
+    components?: MDXComponents
+  }> | null>(null)
   const components = useMDXComponents()
 
   useEffect(() => {
