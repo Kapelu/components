@@ -3,8 +3,8 @@
 # README.md, LICENSE.md, CHANGELOG.md, CONTRIBUTING.md
 
 # Draft content
-drafts/
-*.draft.mdx
+#drafts/
+#*.draft.mdx
 .vscode/
 .mintignore
 .gitignore
